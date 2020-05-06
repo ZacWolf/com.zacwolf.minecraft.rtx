@@ -1,0 +1,973 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<base target="_blank">
+	<style>
+		:root {
+			--color-background: #e7e4e7;
+			--color-border: #6b5f6d;
+			--color-text-default: #0d0c0e;
+			--color-base: #867788;
+			--color-base2: #9e92a0;
+			--color-accent: #363037;
+			--color-shadow: #363037;
+			--opacity-header: 0.9;
+			--opacity-footer: 0.75;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			:root {
+				--color-background: #1b181b;
+				--color-border: #6b5f6d;
+				--color-text-default: #e7e4e7;
+				--color-base: #363037;
+				--color-base2: #504752;
+				--color-accent: #cec8d0;
+				--color-shadow: #cec8d0;
+				--opacity-header: 0.75;
+				--opacity-footer: 0.6;
+			}
+		}
+
+			
+		body{
+			font-family:'Trebuchet MS', sans-serif;
+			font-size:14pt;
+			background-color:var(--color-background);
+			color:var(--color-text-default);
+			overflow:hidden;
+			margin: 0;
+			padding: 0;
+			height: 100%; /* needed for container min-height */
+		}
+		
+		h1 {
+		  display: block;
+		  font-size: 2em;
+		  margin-top: 0.3em;
+		  margin-bottom: 0.3em;
+		  margin-left: 0;
+		  margin-right: 0;
+		  font-weight: bold;
+		}
+		h2 {
+		  display: block;
+		  font-size: 1.5em;
+		  margin-top: 0.4em;
+		  margin-bottom: 0.4em;
+		  margin-left: 0;
+		  margin-right: 0;
+		  font-weight: bold;
+		}
+		h3 {
+		  display: block;
+		  font-size: 1.17em;
+		  margin-top: 0.5em;
+		  margin-bottom: 0.5em;
+		  margin-left: 0;
+		  margin-right: 0;
+		  font-weight: bold;
+		}
+		
+		h5 {
+		  display: block;
+		  font-size: 1.17em;
+		  margin-top: 0;
+		  margin-bottom: 0;
+		  margin-left: 0;
+		  margin-right: 0;
+		  font-weight: bold;
+		}
+		
+		
+		img{
+			border: 1px solid #000000;
+		}
+		
+		a{
+			color:var(--color-accent);
+		}
+		a:active{
+			color:var(--color-accent);
+		}
+		a:visited{
+			color:var(--color-accent);
+		}
+		a:hover{
+			text-decoration-line: underline;
+		}
+		a:hover img{
+			border: 1px solid var(--color-accent);
+		}
+
+		header {
+		  background-color: var(--color-base2);
+		  opacity: var(--opacity-header);
+		  padding: 10px;
+		  max-height:65px;
+		  overflow-y:auto;
+		}
+		
+		header p {
+			color:var(--color-text-default);
+			font-size:16pt;
+			margin:0;
+		}
+		
+		section {
+			position: absolute;
+			top: 75px;
+			bottom: 100px;
+			left:50px;
+			right: 50px;
+			overflow-y:auto;
+			background-color: var(--color-base);
+			padding-left:0px;
+			padding-right:0px;
+			border:1px solid var(--color-border);
+			border-radius: 10px;
+			filter: drop-shadow(2px 2px 4px var(--color-accent)); 
+		}
+		section::-webkit-scrollbar {
+		  width: 1em;
+		}
+		 
+		section::-webkit-scrollbar-track {
+		  border-radius: 10px;
+		  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		}
+		 
+		section::-webkit-scrollbar-thumb {
+		  background-color: var(--color-background);
+		  border-radius: 10px;
+		  outline: 1px solid var(--color-border);
+		}
+		
+		article{
+			margin-left:240px;
+			border-radius:10px;
+			padding-left:25px !important;
+			padding-right:15px !important;
+			
+		}
+
+		
+		footer {
+		  position: fixed;
+		  max-height:90px;
+		  bottom: 0; /* stick to bottom */
+		  background-color: var(--color-base);
+		  padding-left:10px;
+		  padding-right:10px;
+		  overflow-y:auto;
+		}
+		footer p{
+			font-family:monospace;
+			font-size: 12pt;
+			opacity: var(--opacity-footer);
+		}
+		
+		
+		
+		.square-container {
+		  display: flex;
+		  flex-flow: row wrap;
+		  justify-content: flex-start;
+		  align-items: flex-start;
+		  align-content: flex-start;
+		  
+		}
+
+		.square {
+			margin: 10px;
+			border: 1px solid var(--color-border);
+			padding-left: 25px;
+			padding-right: 25px;
+			padding-bottom: 25px;
+			background-color:var(--color-base2);
+		}
+		
+		p.image {
+			height:200px;
+		}
+		p.image img {
+			max-height:200px;
+		}
+		
+		/* The Modal (background) */
+		.modal {
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  padding-top: 100px; /* Location of the box */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.9); /* Black w/ opapsd */
+		}
+
+		/* Modal Content (Image) */
+		.modal-content {
+		  margin: auto;
+		  display: block;
+		  max-height:80%;
+		}
+
+		/* Caption of Modal Image (Image Text) - Same Width as the Image */
+		#caption {
+		  margin: auto;
+		  display: block;
+		  width: 80%;
+		  max-width: 700px;
+		  text-align: center;
+		  color: #ccc;
+		  padding: 10px 0;
+		  height: 150px;
+		}
+
+		/* Add Animation - Zoom in the Modal */
+		.modal-content, #caption {
+		  animation-name: zoom;
+		  animation-duration: 0.6s;
+		}
+
+		@keyframes zoom {
+		  from {transform:scale(0)}
+		  to {transform:scale(1)}
+		}
+
+		/* The Close Button */
+		.close {
+		  position: absolute;
+		  top: 15px;
+		  right: 35px;
+		  color: #f1f1f1;
+		  font-size: 40px;
+		  font-weight: bold;
+		  transition: 0.3s;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: #bbb;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+
+		/* 100% Image Width on Smaller Screens */
+		@media only screen and (max-width: 700px){
+		  .modal-content {
+			width: 100%;
+		  }
+		}
+		
+		.favicon{
+			max-height:16px;
+			border:0px;
+			margin-right:6px;
+			vertical-align: baseline;
+		}
+		
+		.w3-sidebar{
+			z-index: 1;
+			overflow: hidden;
+			box-shadow: none;
+			width: 250px;
+			position: absolute !important;
+			top: 75px;
+			bottom: 100px;
+			left: 50px;
+			right: 50px;
+			height: initial;
+			border-radius: 10px;
+			border-top-right-radius: 0px;
+			border-bottom-right-radius: 0px;
+			border:1px solid var(--color-border);
+			background-color: var(--color-base2);
+			
+		}
+		.w3-button{
+			font-family:monospace;
+		}
+		
+		.w3-button:hover{
+			background-color:var(--color-background) !important;
+			color:var(--color-accent) !important;
+		}
+		
+		.selected{
+			background-color:var(--color-accent);
+			color:var(--color-background);
+		}
+	</style>
+</head>
+<body>
+<header>
+	<p>
+	The following image files are used in the specified .psd [Photoshop 5] files used* to generate the RTX Minecraft block texture files distributed in this package.
+	</p>
+</header>
+<p>
+
+</p>
+<div class="w3-sidebar w3-bar-block w3-card">
+	<h5 class="w3-bar-item">File:</h5>
+	<button id="defaultbutton" class="w3-bar-item w3-button tablink" onclick="openPSD(event, 'wood')">HD_wood.psd</button>
+	<button class="w3-bar-item w3-button tablink" onclick="openPSD(event, 'workstations')">HD_workstations.psd</button>
+	<button class="w3-bar-item w3-button tablink" onclick="openPSD(event, 'ground')">HD_ground.psd</button>
+	<button class="w3-bar-item w3-button tablink" onclick="openPSD(event, 'ores')">HD_ores.psd</button>
+</div>
+<section>
+	<article id="wood" class="w3-container psd w3-animate-opacity" style="display:none">
+		<h2>Acacia</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/acacia-annual-rings-cross-section-free-1141719">
+					<img src="source_image_thumbs/pexels-photo-1141719.jpeg"
+						 title="Photo by:Zsolt Palatinus — From:Pexels File:pexels-photo-1141719.jpeg"
+					></a>
+					<img src="renders/log_acacia_top.jpg"
+						 title="log_acacia_top" 
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_acacia_log_top.jpg"
+						 title="stripped_acacia_log_top"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@sunitalap">Zsolt Palatinus</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://commons.wikimedia.org/wiki/File:Acacia-stenophylla-bark.jpg">
+					<img src="source_image_thumbs/Acacia-stenophylla-bark.jpg"
+						 title="Photo by: Don A.W. Carlson — From:wikimedia File:Acacia-stenophylla-bark.jpg"						 
+					></a>
+					<img src="renders/log_acacia.jpg"
+						 title="log_acacia"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: Don A.W. Carlson<br />
+				From: <a href="https://commons.wikimedia.org"><img class="favicon" src="https://commons.wikimedia.org/favicon.ico">wikimedia</a><br />
+				Usage License: <a href="https://creativecommons.org/licenses/by/2.5" title="Creative Commons Attribution 2.5"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/by.png" title="CC BY 2.5"></a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/wood-wall-wooden-old-91484">
+					<img src="source_image_thumbs/pexels-photo-91484.jpeg"
+						 title="Photo by:Tomas Williams — From:Pexels File:pexels-photo-91484.jpeg"
+					></a>
+					<img src="renders/planks_acacia.jpg"
+						 title="planks_acacia"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_acacia_log.jpg"
+						 title="stripped_acacia_log"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@nexionly">Tomas Williams</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+		</div>
+		<h2>Birch</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.wallpaperflare.com/firewood-birch-manchzhursky-walnut-industry-balance-beam-wallpaper-gmped">
+					<img src="source_image_thumbs/firewood-birch-machzhursky-walnut-industry-balance-beam-wallpaper-gmped.jpg"
+						 title="Photo by:Unknown From:wallpaperflare.com"
+					></a>
+					<img src="renders/log_birch_top.jpg"
+						 title="log_birch_top"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_birch_log_top.jpg"
+						 title="stripped_birch_log_top"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.wallpaperflare.com/"><img class="favicon" src="https://www.wallpaperflare.com/fpublic/css/favicon.ico">Wallpaper Flare</a><br />
+				Usage License: <i>Unstated</i>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/birch-bark-birch-tree-paper-birch-1819200">
+					<img src="source_image_thumbs/birch-bark-birch-tree-paper-birch-1819200.jpg"
+						 title="Photo by:John Cantwell - From:pexels File:birch-bark-birch-tree-paper-birch-1819200.jpg"
+					></a>
+					<img src="renders/log_birch.jpg"
+						 title="log_birch"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@john-cantwell-903350">John Cantwell</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/white-wooden-plank-218434">
+					<img src="source_image_thumbs/white-wooden-plank-218434.jpg"
+						 title="Photo by:Peter Szabo — From:Pexels File:white-wooden-plank-218434.jpg"
+					></a>
+					<img src="renders/planks_birch.jpg"
+						 title="planks_birch"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@peter-szabo-24031">Peter Szabo</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/brown-canvas-material-surface-172294">
+					<img src="source_image_thumbs/brown-canvas-material-surface-172294.jpg"
+						 title="Photo by:FWStudio - From:Pexel File:brown-canvas-material-surface-172294.jpg"
+					></a>
+					<img src="renders/stripped_birch_log.jpg"
+						 title="stripped_birch_log"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@fwstudio-33348">FWStudio</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+		</div>
+		<h2>Big Oak</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.wallpaperflare.com/bark-circular-round-texture-timber-tree-tree-trunk-weathered-wallpaper-anlbm">
+					<img src="source_image_thumbs/bark-circular-round-texture.jpg" 
+						 title="Photo by: unknown - From:wallpaperflare.com Name:bark-circular-round-texture.jpg" 
+					></a>
+					<img src="renders/log_big_oak_top.jpg"
+						 title="log_big_oak_top"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_big_oak_log_top.jpg"
+						 title="stripped_big_oak_log_top"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.wallpaperflare.com/"><img class="favicon" src="https://www.wallpaperflare.com/fpublic/css/favicon.ico">Wallpaper Flare</a><br />
+				Usage License: <i>Unstated</i>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/brown-wooden-board-with-black-bead-210438">
+					<img src="source_image_thumbs/brown-wooden-board-with-black-bead-210438.jpg"
+						 title="Photo by:Pixabay From:Pexels"></a>
+					<img src="renders/log_big_oak.jpg"
+						 title="log_big_oak"
+						 class="modalpreview"
+					>
+					<img src="renders/planks_big_oak.jpg"
+						 title="planks_big_oak"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_big_oak_log.jpg"
+						 title="stripped_big_oak_log"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@pixabay">Pixabay</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+
+		</div>
+		<h2>Jungle</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<img src="source_image_thumbs/Cut_palm-tree.jpg" title="Photo by: Tangopaso - From:wikimedia Name:Cut_palm-tree.jpg" alt="https://commons.wikimedia.org/wiki/File:Cut_palm-tree.jpg">
+					<img src="renders/log_jungle_top.jpg"
+						 title="log_jungle_top"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_jungle_log.jpg"
+						 title="stripped_jungle_log"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_jungle_log_top.jpg"
+						 title="stripped_jungle_log_top"
+						 class="modalpreview"
+					>
+					<img src="renders/planks_jungle.jpg"
+						 title="planks_jungle"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://en.wikipedia.org/wiki/User:Tangopaso">Tangopaso</a><br />
+				From: <a href="https://commons.wikimedia.org"><img class="favicon" src="https://commons.wikimedia.org/favicon.ico">wikimedia</a><br />
+				Usage License: <a href="https://creativecommons.org/licenses/publicdomain/" title="Creative Commons Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/pd.png" title="Creative Commons Public Domain"></a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.publicdomainpictures.net/en/view-image.php?image=249323">
+					<img src="source_image_thumbs/palm-tree-bark-15236313474z9.jpg"
+						 title="Photo by:Petr Kratochvil From:publicdomainpictures.net"
+					></a>
+					<img src="renders/log_jungle.jpg"
+						 title="log_jungle"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: Petr Kratochvil<br />
+				From: <a href="https://www.publicdomainpictures.net"><img class="favicon" src="https://www.publicdomainpictures.net/static/images/favicon-16x16.png">publicdomainpictures.net</a><br />
+				Usage License:  <a href="https://creativecommons.org/licenses/publicdomain/" title="Creative Commons Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/pd.png" title="Creative Commons Public Domain"></a>
+			</div>
+		</div>
+		<h2>Oak</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/abstract-backdrop-background-board-129733">
+					<img src="source_image_thumbs/abstract-backdrop-background-board-129733.jpg"
+						 title="Photo by:Pixabay From:Pexels"></a>
+					<img src="renders/planks_oak.jpg"
+						 title="planks_oak"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_oak_log.jpg"
+						 title="stripped_oak_log"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@fwstudio-33348">FWStudio</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/abstract-backdrop-background-board-129733">
+					<img src="source_image_thumbs/abstract-backdrop-background-board-129733.jpg"
+						 title="Photo by:Pixabay From:Pexels"></a>
+					<img src="renders/log_oak_top.jpg"
+						 title="log_oak_top"
+						 class="modalpreview"
+					>
+					<img src="renders/stripped_oak_log_top.jpg"
+						 title="stripped_oak_log_top"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@fwstudio-33348">FWStudio</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/brown-tree-bark-in-close-up-photography-3817620">
+					<img src="source_image_thumbs/brown-tree-bark-in-close-up-photography-3817620.jpg"
+						 title="Photo by:Pixabay From:Pexels"></a>
+					<img src="renders/log_oak.jpg"
+						 title="log_oak"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@magda-ehlers-pexels/">Magda Ehlers</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+		</div>
+		
+		<h2>Spruce</h2>
+		<div class="square-container">
+		
+		</div>
+
+	</article>
+
+	<article id="workstations" class="w3-container psd w3-animate-opacity" style="display:none">
+		<h2>Anvil</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://pixnio.com/textures-and-patterns/metal-texture/metal-steel-rust-iron-old-abstract-pattern-design-textur">
+					<img src="source_image_thumbs/PIXNIO-1757686-4608x3072.jpg"
+						 title="Photo by:Marcu Ioachim - From:Pixnio"
+					></a>
+					
+				</p>
+				Photo by: <a href="https://www.flickr.com/people/ioachimphotos/">Marcu Ioachim</a><br />
+				From: <a href="https://pixnio.com"><img class="favicon" src="https://pixnio.com/favicon.ico">Pixnio</a><br />
+				Usage License: <a href="https://creativecommons.org/licenses/publicdomain/" title="Creative Commons Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/cc-zero.png" title="Creative Commons Public Domain"></a>
+			</div>
+			<div class="square">
+				<p class="image"><img src="https://pixnio.com/free-images/2019/02/10/2019-02-10-17-51-38-1200x900.jpg" alt="https://pixnio.com/textures-and-patterns/metal-texture/cast-iron-glass-metal-shadow-fence-material-texture-pattern" title="Photo by:Bicanski - From:Pixnio"></p>
+				Photo by: <a href="https://pixnio.com/author/bicanski">Bicanski</a><br />
+				From: <a href="https://pixnio.com"><img class="favicon" src="https://pixnio.com/favicon.ico">Pixnio</a><br />
+				Usage License: <a href="https://creativecommons.org/licenses/publicdomain/" title="Creative Commons Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/cc-zero.png" title="Creative Commons Public Domain"></a>
+			</div>
+		</div>
+		
+		<h2>Barrel</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/white-metal-chair-beside-brown-wooden-barrel-2864766">
+					<img src="source_image_thumbs/pexels-photo-2864766.jpeg"
+						 title="Photo by:Lara Santos - From:Pexels"
+					></a>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@laraserrasantos">Lara Santos</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.goodfreephotos.com/united-states/wisconsin/southern-wisconsin/wine-barrel-wollersheim-winery-wisconsin.jpg.php">
+					<img src="source_image_thumbs/wine-barrel-wollersheim-winery-wisconsin.jpg"
+						 title="Photo by:unknown - From:Good Free Photos"
+					></a>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.goodfreephotos.com"><img class="favicon" src="https://www.goodfreephotos.com/favicon.ico">Good Free Photos</a><br />
+				Usage License: <a href="https://creativecommons.org/licenses/publicdomain/" title="Creative Commons Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/cc-zero.png" title="Creative Commons Public Domain"></a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/star-trail-photography-2868665">
+					<img src="source_image_thumbs/pexels-photo-2868665.jpeg"
+						 title="Photo by:Killian Eon - From:Pexels"
+					></a>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@killian-eon-1185568">Killian Eon</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+		</div>
+		
+		<h2>Bookshelf</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://mcpedl.com/trp-photorealism">
+					<img src="source_image_thumbs/bookshelf.png"
+						 title="Photo by: Unknown = From:trp-photorealism"
+					></a>
+					
+				</p>
+				Photo by: <a href="https://mcpedl.com/user/puruan-trp/">Puruan TRP</a><sup>1</sup><br />
+				From: <a href="https://mcpedl.com"><img src="https://mcpedl.com/wp-content/uploads/2014/04/mcpedlnotext.png" class="favicon">mcpedl.com</a><br />
+				Usage License: <i>Custom&mdash;see link</i>
+			</div>
+		</div>
+	</article>
+	<article id="ground" class="w3-container psd w3-animate-opacity" style="display:none">
+		<h2>Dirt</h2>
+		<div class="square-container">
+			<div class="square">
+				<h3>grass_top:</h3>
+					<p class="image"><img src="https://images.pexels.com/photos/413195/pexels-photo-413195.jpeg" title="Photo by:Gravitylicious.com - From:Pexels" alt="https://www.pexels.com/photo/background-bright-close-up-environment-413195/"></p>
+					Photo by: <a href="https://www.pexels.com/@gravitylicious">Gravitylicious.com</a><br />
+					From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+					Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+
+		</div>
+		<h2>Grass</h2>
+		<div class="square-container">
+			<div class="square">
+				<h3>grass_top:</h3>
+					<p class="image"><img src="https://images.pexels.com/photos/413195/pexels-photo-413195.jpeg" title="Photo by:Gravitylicious.com - From:Pexels" alt="https://www.pexels.com/photo/background-bright-close-up-environment-413195/"></p>
+					Photo by: <a href="https://www.pexels.com/@gravitylicious">Gravitylicious.com</a><br />
+					From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+					Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+
+		</div>
+		<h2>Snow</h2>
+		<div class="square-container">
+			<div class="square">
+				<h3>snow_side & snow:</h3>
+					<p class="image"><img src="https://www.publicdomainpictures.net/pictures/260000/velka/snow-texture-1526131590l5v.jpg" title="Photo by:Marina Pershina - From:publicdomainpictures.net" alt="https://www.publicdomainpictures.net/en/view-image.php?image=252541"></p>
+					Photo by: <a href="https://www.publicdomainpictures.net/en/contact.php?email=141485&img=252541">Marina Pershina</a><br />
+					From: <a href="https://www.publicdomainpictures.net"><img class="favicon" src="https://www.publicdomainpictures.net/static/images/favicon-16x16.png">publicdomainpictures.net</a><br />
+					Usage License:  <a href="https://creativecommons.org/licenses/publicdomain/" title="Creative Commons Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/pd.png" title="Creative Commons Public Domain"></a>
+			</div>
+
+		</div>
+	</article>
+	
+	<article id="ores" class="w3-container psd w3-animate-opacity" style="display:none">
+		<h2>Common Stone Background</h2>
+		<div class="square-container">
+			<div class="square">
+					<p class="image">
+						<a href="http://unisci24.com/335275.html">
+						<img src="source_image_thumbs/335275-stone.jpg" 
+							 title="Photo by:Samuel Buzzetta - From:unisci24.com"
+						></a>
+						<img src="renders/stone.jpg"
+							 title="stone"
+							 class="modalpreview"
+						>
+					</p>
+					Photo by: <a href="http://unisci24.com/users/95/">Samuel Buzzetta</a><br />
+					From: <a href="http://unisci24.com/"><img class="favicon" src="http://unisci24.com/tpl/images/fotonin_logo.png">unisci24.com</a><br />
+					Usage License: <i>Unstated</i>
+			</div>
+		</div>
+		<h2>Emerald</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.hiclipart.com/free-transparent-background-png-clipart-ygain">
+					<img src="source_image_thumbs/hiclipart_emerald_block.png"
+						 title="Photo by:Unknown From:hiclipart.com"
+					></a>
+					<img src="renders/emerald_block.jpg"
+						 title="emerald_block"
+						 class="modalpreview"
+					>
+					<img src="renders/diamond_block.jpg"
+						 title="diamond_block"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.hiclipart.com"><img class="favicon" src="https://www.hiclipart.com/public/css/favicon.ico">hiclipart.com</a><br />
+				Usage License: <i>Custom&mdash;see source link</i>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://commons.wikimedia.org/wiki/File:Gemperidot.JPG">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Gemperidot.JPG/265px-Gemperidot.JPG"
+						 title="Photo by: Michelle Jo - From:wikimedia Name:Gemperidot.JPG"
+					></a>
+					<img src="renders/emerald_ore.jpg"
+						 title="emerald_ore"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://en.wikipedia.org/wiki/User:Humanfeather">Michelle Jo</a><br />
+				From: <a href="https://commons.wikimedia.org"><img class="favicon" src="https://commons.wikimedia.org/favicon.ico">wikimedia</a><br />
+				Usage License: <a href="https://creativecommons.org/publicdomain/mark/1.0/" title="Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/pd.png" title="Public Domain"></a>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://commons.wikimedia.org/wiki/File:Bahia_Emerald.jpg">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Bahia_Emerald.jpg"
+						 title="Photo by: bhcourier.com - From:wikimedia Name:/Bahia_Emerald.jpg"
+					></a>
+					<img src="renders/emerald_ore.jpg"
+						 title="emerald_ore"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://bhcourier.com/wp-content/uploads/2015/05/bahia-emerald.jpg">bhcourier.com</a><br />
+				From: <a href="https://commons.wikimedia.org"><img class="favicon" src="https://commons.wikimedia.org/favicon.ico">wikimedia</a><br />
+				Usage License: <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" title="Creative Commons Attribution-Share Alike 4.0 International"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/by-sa.png" title="Creative Commons Attribution-Share Alike 4.0 International"></a>
+			</div>
+		</div>
+		<h2>Diamond</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.hiclipart.com/free-transparent-background-png-clipart-immbg">
+					<img src="source_image_thumbs/hiclipart_diamond_block.png"
+						 title="Photo by:Unknown From:hiclipart.com"
+					></a>
+					<img src="renders/diamond_block.jpg"
+						 title="diamond_block"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.hiclipart.com"><img class="favicon" src="https://www.hiclipart.com/public/css/favicon.ico">hiclipart.com<br />
+				Usage License: <i>Custom&emdash;see source link</i>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://www.gemrockauctions.com/auctions/67ct-142mm-blue-green-grey-rough-diamond-cluster-slice-142-by-129-by-53mm-c-882244">
+					<img src="source_image_thumbs/5c6419fc21d4e.jpg" 
+						 title="Photo by: Unknown - From:gemrockauctions.com"
+						 
+					></a>
+					<img src="renders/diamond_ore.jpg"
+						 title="diamond_ore"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.gemrockauctions.com"><img class="favicon" src="https://df2sm3urulav.cloudfront.net/tenants/gr/theme/images/favicon.png">gemrockauctions.com</a><br />
+				Usage License: <i>Unstated</i>
+			</div>
+			<div class="square">
+				<p class="image">
+					<a href="https://thejewelerblog.wordpress.com/2014/01/22/ultra-rare-29-6-carat-blue-diamond-discovered-at-the-legendary-cullinan-mine-in-south-africa-gem-could-fetch-20-million">
+					<img src="source_image_thumbs/bluediamond2.jpg" 
+						 title="Photo by: Unknown - From:thejewelerblog.files.wordpress.com"						 
+					></a>
+					<img src="renders/diamond_ore.jpg"
+						 title="diamond_ore"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.gemrockauctions.com"><img class="favicon" src="https://s0.wp.com/i/favicon.ico">thejewelerblog.files.wordpress.com</a><br />
+				Usage License: <i>Unstated</i>
+			</div>
+			
+		</div>
+		<h2>Iron</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://pixnio.com/textures-and-patterns/metal-texture/metal-steel-rust-iron-old-abstract-pattern-design-textur">
+					<img src="source_image_thumbs/PIXNIO-1757686-4608x3072.jpg"
+						 title="Photo by:Marcu Ioachim - From:Pixnio"
+					></a>
+					<img src="renders/iron_block.jpg"
+						 title="iron_block"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.flickr.com/people/ioachimphotos/">Marcu Ioachim</a><br />
+				From: <a href="https://pixnio.com"><img class="favicon" src="https://pixnio.com/favicon.ico">Pixnio</a><br />
+				Usage License: <a href="https://creativecommons.org/licenses/publicdomain/" title="Creative Commons Public Domain"><img class="favicon" src="https://mirrors.creativecommons.org/presskit/buttons/80x15/png/cc-zero.png" title="Creative Commons Public Domain"></a>
+			</div>
+		</div>
+		<h2>Redstone</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/concrete-wall-1265952">
+					<img src="source_image_thumbs/concrete-wall-1265952.jpg"
+						 title="Photo by:Henry & Co. - From:Pexels"
+					></a>
+					<img src="renders/restone_block.jpg"
+						 title="redstone_block"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@hngstrm">Henry & Co.</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+		</div>
+		<h2>Coal</h2>
+		<div class="square-container">
+			<div class="square">
+				<p class="image">
+					<a href="https://www.pexels.com/photo/rock-formation-close-up-photography-2646237">
+					<img src="https://images.pexels.com/photos/2646237/pexels-photo-2646237.jpeg"
+						 title="Photo by:Dexter Fernandes - From:Pexels"
+					></a>
+					<img src="renders/coal_block.jpg"
+						 title="coal_block"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <a href="https://www.pexels.com/@dexter-fernandes-1363476">Dexter Fernandes</a><br />
+				From: <a href="https://www.pexels.com"><img class="favicon" src="https://www.pexels.com/favicon.ico">Pexels</a><br />
+				Usage License: <a href="https://www.pexels.com/license/" title="Legal Simplicity">Legal Simplicity</a>
+			</div>
+		</div>
+		<h2>Lapis</h2>
+		<div class="square">
+				<p class="image">
+					<a href="https://www.hiclipart.com/free-transparent-background-png-clipart-ftxaa">
+					<img src="source_image_thumbs/hiclipart_lapis.png"
+						 title="Photo by:Unknown From:hiclipart.com"
+					></a>
+					<img src="renders/lapis_block.jpg"
+						 title="diamond_block"
+						 class="modalpreview"
+					>
+				</p>
+				Photo by: <i>Unknown</i><br />
+				From: <a href="https://www.hiclipart.com"><img class="favicon" src="https://www.hiclipart.com/public/css/favicon.ico">hiclipart.com<br />
+				Usage License: <i>Custom&emdash;see source link</i>
+			</div>
+		
+	</article>
+
+</section>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="modalimg">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+<footer>
+<p>
+*If you are the copyright owner of any of these resources and you did not give permission to these providers ("From:") or not under the license they are stating, please contact the specific vendor as well as <a href="mailto:zac@zacwolf.com">let me know</a> and I will remove your copyrighted material from this resource pack.
+</p>
+</footer>
+	<script>
+	// Get the modal
+	var modal = document.getElementById("myModal");
+	var modalImg = document.getElementById("modalimg");
+	var captionText = document.getElementById("caption");
+
+	// forEach method, could be shipped as part of an Object Literal/Module
+	var forEach = function (array, callback, scope) {
+	  for (var i = 0; i < array.length; i++) {
+		callback.call(scope, i, array[i]); // passes back stuff we need
+	  }
+	};
+
+	// Usage:
+	// optionally change the scope as final parameter too, like ECMA5
+	var myNodeList = document.getElementsByClassName("modalpreview")
+	forEach(myNodeList, function (index, img) {
+		img.onclick = function(){
+			modal.style.display = "block";
+			modalImg.src = this.src;
+			modalImg.onclick= function(){
+				window.open(this.src);
+			}
+			captionText.innerHTML = this.title;
+		  	// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+			  modal.style.display = "none";
+			}
+		}
+	});
+
+	function openPSD(evt, psdName) {
+	  var i, x, tablinks;
+	  x = document.getElementsByClassName("psd");
+	  for (i = 0; i < x.length; i++) {
+		x[i].style.display = "none";
+	  }
+	  tablinks = document.getElementsByClassName("tablink");
+	  for (i = 0; i < x.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" selected", "");
+	  }
+	  document.getElementById(psdName).style.display = "block";
+	  evt.currentTarget.className += " selected";
+	}
+
+	document.getElementById('defaultbutton').click();
+	</script>
+</body>
+</html>
