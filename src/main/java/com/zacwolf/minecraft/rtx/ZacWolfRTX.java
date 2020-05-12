@@ -38,19 +38,21 @@ public class ZacWolfRTX {
 	 *
 	 */
 	public ZacWolfRTX(final File file,final String type, final int size,final File outdir) throws IllegalArgumentException,IOException{
-final	ImageInputStream		is		=	ImageIO.createImageInputStream(file);
+final	File					outfile		=	new File(outdir+File.separator+file.getName());
+final	ImageInputStream		is			=	ImageIO.createImageInputStream(file);
 		try {
-final	Iterator<ImageReader>	readers	=	ImageIO.getImageReaders(is);
+final	Iterator<ImageReader>	readers		=	ImageIO.getImageReaders(is);
 			if (!readers.hasNext()) {
 				throw new IllegalArgumentException("No reader for: " + file);
 			}
-final	ImageReader				reader	=	readers.next();
+final	ImageReader				reader		=	readers.next();
 	        try {	            reader.setInput(is);
-	        	if (reader.getHeight(0)>size) {
+	        	if (reader.getWidth(0)<=size || reader.getHeight(0)<=size ) {
+	        		FileUtils.copyFile(file, outfile);
+	        	} else {
 final	BufferedImage			input		=	reader.read(0, reader.getDefaultReadParam());
 final	BufferedImageOp			resampler	=	new ResampleOp(size, size, ResampleOp.FILTER_LANCZOS); // A good default filter, see class documentation for more info
 final	BufferedImage			output		=	resampler.filter(input, null);
-final	File					outfile		=	new File(outdir+File.separator+file.getName());
 					if (ImageIO.write(output, type, outfile)) {
 					   System.out.println("Created file:"+outfile);
 					} else {
@@ -58,11 +60,9 @@ final	File					outfile		=	new File(outdir+File.separator+file.getName());
 					}
 	        	}
 			} finally {
-	            // Dispose reader in finally block to avoid memory leaks
 	            reader.dispose();
 	        }
 		} finally {
-	        // Close stream in finally block to avoid resource leaks
 	        is.close();
 	    }
 	}
@@ -88,25 +88,51 @@ final	File				dir			=	new File(new File(".").getCanonicalFile()+File.separator+"
 final	File				outdir		=	new File(dir+File.separator+"textures"+File.separator+"blocks");
 							outdir.mkdirs();
 					try (Stream<Path> paths = Files.walk(Paths.get("./images/textures/blocks"))) {
-					    paths
-					        .filter(Files::isRegularFile)
-					        .forEach(path -> {
-					        	try {
+					    paths.filter(Files::isRegularFile).forEach(path -> {
+					    	try {
 final	String				file		=	path.toAbsolutePath().toFile().getCanonicalPath();
 final	String				filename	=	path.getFileName().toString();
 final	String				ext			=	filename.substring(filename.lastIndexOf(".")+1).toUpperCase();
 									new ZacWolfRTX(new File(file),ext,size,outdir);
-								} catch (final IOException e) {
-									e.printStackTrace();
-								}
-					        });
+							} catch (final Exception e) {
+								e.printStackTrace();
+							}
+				        });
+					}
+final	File				outdir2		=	new File(dir+File.separator+"textures"+File.separator+"entity"+File.separator+"bed");
+							outdir2.mkdirs();
+					try (Stream<Path> paths2 = Files.walk(Paths.get("./images/textures/entity/bed"))) {
+					    paths2.filter(Files::isRegularFile).forEach(path -> {
+					    	try {
+final	String				file		=	path.toAbsolutePath().toFile().getCanonicalPath();
+final	String				filename	=	path.getFileName().toString();
+final	String				ext			=	filename.substring(filename.lastIndexOf(".")+1).toUpperCase();
+									new ZacWolfRTX(new File(file),ext,size,outdir2);
+							} catch (final Exception e) {
+								e.printStackTrace();
+							}
+				        });
+					}
+final	File				outdir3		=	new File(dir+File.separator+"textures"+File.separator+"entity"+File.separator+"chest");
+							outdir3.mkdirs();
+					try (Stream<Path> paths3 = Files.walk(Paths.get("./images/textures/entity/chest"))) {
+					    paths3.filter(Files::isRegularFile).forEach(path -> {
+					    	try {
+final	String				file		=	path.toAbsolutePath().toFile().getCanonicalPath();
+final	String				filename	=	path.getFileName().toString();
+final	String				ext			=	filename.substring(filename.lastIndexOf(".")+1).toUpperCase();
+									new ZacWolfRTX(new File(file),ext,size,outdir3);
+							} catch (final Exception e) {
+								e.printStackTrace();
+							}
+				        });
 					}
 				}
+			} else {
+				new HelpFormatter().printHelp("ZacWolfRTX", options);
 			}
 		} catch (final Exception e) {
 			e.printStackTrace();
-final	HelpFormatter		formatter	= new HelpFormatter();
-      						formatter.printHelp("ZacWolfRTX", options);
 		}
 	}
 }

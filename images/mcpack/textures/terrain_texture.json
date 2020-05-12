@@ -1,0 +1,45 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "campfire_fire": {
+      "textures": {
+        "path": "textures/blocks/campfire",
+        "pbr_emissive": 0.2
+      }
+    },
+    "flowing_lava": {
+      "quad": 1,
+      "textures": {
+        "path": "textures/blocks/lava_flow",
+        "pbr_emissive": 0.2
+      }
+    },
+    "fire_0": {
+      "textures": {
+        "path": "textures/blocks/fire_0",
+        "pbr_emissive": 0.2
+      }
+    },
+    "fire_1": {
+      "textures": {
+        "path": "textures/blocks/fire_1",
+        "pbr_emissive": 0.2
+      }
+    },
+    "still_lava": {
+      "textures": {
+        "path": "textures/blocks/lava_still",
+        "pbr_emissive": 0.2
+      }
+    },
+    "sea_lantern": {
+      "textures": {
+        "path": "textures/blocks/sea_lantern",
+        "pbr_emissive": 0.2
+      }
+    }
+  }
+}
