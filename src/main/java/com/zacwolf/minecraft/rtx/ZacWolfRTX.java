@@ -80,14 +80,23 @@ final	CommandLineParser	parser		=	new DefaultParser();
 final	CommandLine			cmd			=	parser.parse( options, args);
 			if (cmd.hasOption("s")) {
 final	int					size		=	Integer.parseInt(cmd.getOptionValue("s"));
-				if (size == 128 || size == 256) {
+				if (size == 128 || size == 256 || size == 512) {
 final	File				dir			=	new File(new File(".").getCanonicalFile()+File.separator+"mcpack"+File.separator+size);
 						if (dir.exists()) {
-							FileUtils.deleteDirectory(dir);
+							for (int retry=0; retry<5; retry++) {
+								try {
+									FileUtils.deleteDirectory(dir);
+									break;
+								} catch (final IOException io) {
+									if (retry>=5) {
+										throw io;
+									}
+								}
+							}
 						}
 final	File				outdir		=	new File(dir+File.separator+"textures"+File.separator+"blocks");
 							outdir.mkdirs();
-					try (Stream<Path> paths = Files.walk(Paths.get("./images/textures/blocks"))) {
+					try (Stream<Path> paths = Files.walk(Paths.get("./mcpack/src/textures/blocks"))) {
 					    paths.filter(Files::isRegularFile).forEach(path -> {
 					    	try {
 final	String				file		=	path.toAbsolutePath().toFile().getCanonicalPath();
@@ -101,7 +110,7 @@ final	String				ext			=	filename.substring(filename.lastIndexOf(".")+1).toUpperC
 					}
 final	File				outdir2		=	new File(dir+File.separator+"textures"+File.separator+"entity"+File.separator+"bed");
 							outdir2.mkdirs();
-					try (Stream<Path> paths2 = Files.walk(Paths.get("./images/textures/entity/bed"))) {
+					try (Stream<Path> paths2 = Files.walk(Paths.get("./mcpack/src/textures/entity/bed"))) {
 					    paths2.filter(Files::isRegularFile).forEach(path -> {
 					    	try {
 final	String				file		=	path.toAbsolutePath().toFile().getCanonicalPath();
@@ -115,7 +124,7 @@ final	String				ext			=	filename.substring(filename.lastIndexOf(".")+1).toUpperC
 					}
 final	File				outdir3		=	new File(dir+File.separator+"textures"+File.separator+"entity"+File.separator+"chest");
 							outdir3.mkdirs();
-					try (Stream<Path> paths3 = Files.walk(Paths.get("./images/textures/entity/chest"))) {
+					try (Stream<Path> paths3 = Files.walk(Paths.get("./mcpack/src/textures/entity/chest"))) {
 					    paths3.filter(Files::isRegularFile).forEach(path -> {
 					    	try {
 final	String				file		=	path.toAbsolutePath().toFile().getCanonicalPath();
