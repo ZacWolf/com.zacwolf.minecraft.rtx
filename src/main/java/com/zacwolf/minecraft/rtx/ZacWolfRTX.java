@@ -6,6 +6,7 @@ package com.zacwolf.minecraft.rtx;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,6 +67,26 @@ final	BufferedImage			output		=	resampler.filter(input, null);
 	        is.close();
 	    }
 	}
+	
+	public ZacWolfRTX(final String path, final String filename) {
+		try {
+final	FileWriter	myWriter = new FileWriter(path+File.separator+filename+".texture_set.json");
+					myWriter.write("{\n"+
+						  "\t\"format_version\": \"1.16.100\",\n"+
+						  "\t\"minecraft:texture_set\": {\n"+
+						  "\t\t\"color\": \""+filename+"\",\n"+
+						  "\t\t\"metalness_emissive_roughness\": \""+filename+"_mer\",\n"+
+						  "\t\t\"normal\": \""+filename+"_normal\"\n"+
+						  "\t}\n"+
+						  "}"
+					);
+					myWriter.close();
+		      System.out.println("Successfully created:"+filename+".texture_set.json");
+		    } catch (IOException e) {
+		      System.out.println("An error occurred for file:"+filename+".texture_set.json");
+		      e.printStackTrace();
+		    }
+	}
 
 	/**
 	 * @param args
@@ -73,12 +94,27 @@ final	BufferedImage			output		=	resampler.filter(input, null);
 	public static void main(final String[] args) {
 final	Options				options		= new Options();
 							options.addOption("v", "version", true, "Version")
-									.addOption("s", "size", true, "Texture size");
+									.addOption("s", "size", true, "Texture size")
+									.addOption("j", "json", false, "Create texture json files");
 
 final	CommandLineParser	parser		=	new DefaultParser();
 		try {
 final	CommandLine			cmd			=	parser.parse( options, args);
-			if (cmd.hasOption("s")) {
+			if (cmd.hasOption("j")) {
+				try (Stream<Path> paths = Files.walk(Paths.get("./mcpack/src/textures/blocks"))) {
+				    paths.filter(Files::isRegularFile)
+				    	 .forEach(path -> {
+				    	try {
+		String				filename	=	path.getFileName().toString();
+							filename	=	filename.substring(0,filename.lastIndexOf("."));
+							if (!filename.contains("_mer") && !filename.contains("_normal"))
+								new ZacWolfRTX(path.getParent().toString(),filename);
+						} catch (final Exception e) {
+							e.printStackTrace();
+						}
+			        });
+				}
+			} else if (cmd.hasOption("s")) {
 final	int					size		=	Integer.parseInt(cmd.getOptionValue("s"));
 				if (size == 128 || size == 256 || size == 512) {
 final	File				dir			=	new File(new File(".").getCanonicalFile()+File.separator+"mcpack"+File.separator+size);
